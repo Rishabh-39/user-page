@@ -11,9 +11,9 @@ function Signup({ setUser, setIsLogin }) {
     password: "",
     confirmPassword: "",
     dob: "",
-    Name: "",
-    Phone: "",
-    Relation: "",
+    emergencyName: "",
+    emergencyPhone: "",
+    emergencyRelation: "",
   });
 
   const handleChange = (e) => {
@@ -27,7 +27,7 @@ function Signup({ setUser, setIsLogin }) {
     if (!signupData.childName || !signupData.parentName || !signupData.gender || 
         !signupData.dob || !signupData.phone || !signupData.email || 
         !signupData.address || !signupData.password || !signupData.confirmPassword ||
-        !signupData.name || !signupData.phone || !signupData.relation) {
+        !signupData.emergencyName || !signupData.emergencyPhone || !signupData.emergencyRelation) {
       alert("Please fill in all required fields");
       return;
     }
@@ -43,27 +43,37 @@ function Signup({ setUser, setIsLogin }) {
     }
     
     if (!/^\d{10}$/.test(signupData.phone)) {
-      alert("Please enter a valid phone number");
+      alert("Please enter a valid 10-digit phone number");
       return;
     }
     
-    setUser({ email: signupData.email, password: signupData.password });
+    if (!/^\d{10}$/.test(signupData.emergencyPhone)) {
+      alert("Please enter a valid emergency contact number");
+      return;
+    }
+    
+    setUser({ 
+      phone: signupData.phone,
+      email: signupData.email, 
+      password: signupData.password 
+    });
     alert("Account Created Successfully");
     setIsLogin(true);
   };
 
+  // Keep same size but better spacing
   const inputClass =
-    "w-full h-9 md:h-10 rounded-lg border border-gray-300 px-3 text-sm outline-none bg-white/60 focus:border-purple-400 transition-colors placeholder:text-gray-400";
+    "w-full h-11 md:h-12 rounded-lg border border-gray-300 px-4 text-sm outline-none bg-white/60 focus:border-purple-400 transition-colors placeholder:text-gray-400";
 
-  const labelClass = "block text-xs md:text-sm font-medium text-gray-700 mb-1";
-  const requiredStar = <span className="text-red-500 text-xs ml-0.5">*</span>;
+  const labelClass = "block text-sm md:text-base font-medium text-gray-700 mb-2";
+  const requiredStar = <span className="text-red-500 text-sm ml-0.5">*</span>;
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      {/* Scrollable Container with hidden scrollbar */}
-      <div className="h-[500px] md:h-[550px] overflow-y-auto scrollbar-hide">
+    <div className="w-full max-w-md mx-auto p-4">
+      {/* Scrollable Container - Same size */}
+      <div className="h-[298px] md:h-[348px] overflow-y-auto scrollbar-hide">
         
-        <form onSubmit={handleSubmit} className="space-y-3 pr-1">
+        <form onSubmit={handleSubmit} className="space-y-5">
           
           {/* Child Name */}
           <div>
@@ -102,11 +112,11 @@ function Signup({ setUser, setIsLogin }) {
             <label className={labelClass}>
               Gender{requiredStar}
             </label>
-            <div className="flex flex-wrap items-center gap-2 mt-1">
-              <label className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border cursor-pointer transition-all text-sm font-medium
+            <div className="flex flex-wrap items-center gap-3 mt-1.5">
+              <label className={`flex items-center gap-2 px-5 py-2.5 rounded-lg border-2 cursor-pointer transition-all text-sm font-medium
                 ${signupData.gender === "Male"
                   ? "border-purple-500 bg-purple-50 text-purple-700"
-                  : "border-gray-200 bg-white/60 text-gray-600 hover:border-purple-300"
+                  : "border-gray-300 bg-white/60 text-gray-700 hover:border-purple-300"
                 }`}>
                 <input
                   type="radio"
@@ -119,10 +129,10 @@ function Signup({ setUser, setIsLogin }) {
                 👦 Boy
               </label>
 
-              <label className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border cursor-pointer transition-all text-sm font-medium
+              <label className={`flex items-center gap-2 px-5 py-2.5 rounded-lg border-2 cursor-pointer transition-all text-sm font-medium
                 ${signupData.gender === "Female"
                   ? "border-purple-500 bg-purple-50 text-purple-700"
-                  : "border-gray-200 bg-white/60 text-gray-600 hover:border-purple-300"
+                  : "border-gray-300 bg-white/60 text-gray-700 hover:border-purple-300"
                 }`}>
                 <input
                   type="radio"
@@ -160,7 +170,7 @@ function Signup({ setUser, setIsLogin }) {
             <input
               type="tel"
               name="phone"
-              placeholder="Enter number"
+              placeholder="Enter 10-digit mobile number"
               value={signupData.phone}
               onChange={handleChange}
               className={inputClass}
@@ -197,7 +207,7 @@ function Signup({ setUser, setIsLogin }) {
               value={signupData.address}
               onChange={handleChange}
               rows="2"
-              className="w-full rounded-lg border border-gray-300 px-3 py-1.5 text-sm outline-none resize-none bg-white/60 focus:border-purple-400 transition-colors placeholder:text-gray-400"
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none resize-none bg-white/60 focus:border-purple-400 transition-colors placeholder:text-gray-400"
               required
             />
           </div>
@@ -236,8 +246,8 @@ function Signup({ setUser, setIsLogin }) {
           </div>
 
           {/* Emergency Contact Section */}
-          <div className="bg-gray-100/80 rounded-xl p-3 space-y-3">
-            <h2 className="text-sm md:text-base font-semibold text-gray-800">Emergency Contact</h2>
+          <div className="bg-gray-100/80 rounded-xl p-4 space-y-4">
+            <h2 className="text-base md:text-lg font-semibold text-gray-900 mb-2">Emergency Contact</h2>
 
             {/* Contact Name */}
             <div>
@@ -246,9 +256,9 @@ function Signup({ setUser, setIsLogin }) {
               </label>
               <input
                 type="text"
-                name="Name"
-                placeholder="Enter name"
-                value={signupData.name}
+                name="emergencyName"
+                placeholder="Enter emergency contact name"
+                value={signupData.emergencyName}
                 onChange={handleChange}
                 className={inputClass}
                 required
@@ -258,13 +268,13 @@ function Signup({ setUser, setIsLogin }) {
             {/* Contact Phone */}
             <div>
               <label className={labelClass}>
-                Phone Number{requiredStar}
+                Phone{requiredStar}
               </label>
               <input
                 type="tel"
-                name="Phone Number"
-                placeholder="Enter number"
-                value={signupData.phone}
+                name="emergencyPhone"
+                placeholder="Enter 10-digit mobile number"
+                value={signupData.emergencyPhone}
                 onChange={handleChange}
                 className={inputClass}
                 required
@@ -280,9 +290,9 @@ function Signup({ setUser, setIsLogin }) {
               </label>
               <input
                 type="text"
-                name="Relation"
-                placeholder="E.g., Mother, Father, Uncle"
-                value={signupData.relation}
+                name="emergencyRelation"
+                placeholder="E.g., Mother, Father, Uncle, Grandparent"
+                value={signupData.emergencyRelation}
                 onChange={handleChange}
                 className={inputClass}
                 required
@@ -293,13 +303,13 @@ function Signup({ setUser, setIsLogin }) {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full h-9 md:h-10 rounded-lg bg-[#000a3d] text-white text-sm font-semibold hover:scale-[1.01] transition-all shadow-md hover:shadow-lg mt-2"
+            className="w-full h-11 md:h-12 rounded-lg bg-[#000a3d] text-white text-sm md:text-base font-semibold hover:scale-[1.01] transition-all shadow-md hover:shadow-lg mt-3"
           >
             Register
           </button>
 
           {/* Note about required fields */}
-          <p className="text-xs text-gray-500 text-center mt-2 pb-1">
+          <p className="text-xs text-gray-500 text-center mt-3 pb-2">
             <span className="text-red-500">*</span> All fields are required
           </p>
         </form>
