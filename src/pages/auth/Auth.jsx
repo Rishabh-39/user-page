@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Login from "../../components/auth/Login";
-import Signup from "../../components/auth/Signup";
+import Login from "../../pages/login/Login";
+import Signup from "../../pages/signup/Signup";
 
 function Auth({ user, setUser, setIsAuthenticated }) {
   const [isLogin, setIsLogin] = useState(true);

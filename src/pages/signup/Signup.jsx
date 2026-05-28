@@ -91,21 +91,7 @@ function Signup({ setUser, setIsLogin }) {
             />
           </div>
 
-          {/* Parent Name */}
-          <div>
-            <label className={labelClass}>
-              Parent Name{requiredStar}
-            </label>
-            <input
-              type="text"
-              name="parentName"
-              placeholder="Enter parent's full name"
-              value={signupData.parentName}
-              onChange={handleChange}
-              className={inputClass}
-              required
-            />
-          </div>
+        
 
           {/* Gender */}
           <div>
@@ -147,6 +133,7 @@ function Signup({ setUser, setIsLogin }) {
             </div>
           </div>
 
+          
           {/* Date of Birth */}
           <div>
             <label className={labelClass}>
@@ -161,7 +148,26 @@ function Signup({ setUser, setIsLogin }) {
               required
             />
           </div>
-
+          
+          
+          {/* Parent Name */}
+          <div>
+            <label className={labelClass}>
+              Parent Name{requiredStar}
+            </label>
+            <input
+              type="text"
+              name="parentName"
+              placeholder="Enter parent's full name"
+              value={signupData.parentName}
+              onChange={handleChange}
+              className={inputClass}
+              required
+            />
+          </div>
+          
+          
+                  
           {/* Phone Number */}
           <div>
             <label className={labelClass}>
